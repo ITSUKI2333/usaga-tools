@@ -1,7 +1,7 @@
 """Custom glyph IDs are independent of Unicode; no OCR or inferred replacements."""
 import re
 from .runtime import read_csv
-TOKEN=re.compile(r'��������([0-9a-fA-F]{4})��')
+TOKEN=re.compile(r'〈特殊码([0-9a-fA-F]{4})〉')
 
 class Codec:
     def __init__(self,path):
@@ -22,10 +22,10 @@ class Codec:
                 if p+1>=len(data):break
                 code=c*256+data[p+1];step=2
                 if code<0x2830:
-                    chars.append(f'��������{code:04X}��');ids.append(100000+code);unknown.append(100000+code);p+=2;continue
+                    chars.append(f'〈特殊码{code:04X}〉');ids.append(100000+code);unknown.append(100000+code);p+=2;continue
                 i=code-0x2830
                 if i>=1764:break
-            chars.append(self.mapping.get(i,f'������{i}��'));ids.append(i)
+            chars.append(self.mapping.get(i,f'〈字形{i}〉'));ids.append(i)
             if i not in self.mapping:unknown.append(i)
             p+=step
         return ''.join(chars),p,sorted(set(unknown)),ids

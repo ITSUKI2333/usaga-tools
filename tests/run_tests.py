@@ -24,19 +24,19 @@ class Regression(unittest.TestCase):
     def codec(self):
         p=self.dir/'mapping.csv'
         with p.open('w',encoding='utf-8-sig',newline='') as f:
-            w=csv.writer(f);w.writerow(['glyph_index','character']);w.writerows([(0,'��'),(207,'��'),(208,'��')])
+            w=csv.writer(f);w.writerow(['glyph_index','character']);w.writerows([(0,'甲'),(207,'乙'),(208,'丙')])
         return Codec(p)
     def test_custom_encoding_boundary(self):
         c=self.codec();raw=b'\x30\xff\x29\x00\x01'
         t,end,u,ids=c.decode_run(raw,0)
-        self.assertEqual((t,end,u,ids),('���ұ�',4,[],[0,207,208]));self.assertEqual(c.encode_original(t),raw[:-1])
-        with self.assertRaises(ValueError):c.encode_original('��')
+        self.assertEqual((t,end,u,ids),('甲乙丙',4,[],[0,207,208]));self.assertEqual(c.encode_original(t),raw[:-1])
+        with self.assertRaises(ValueError):c.encode_original('丁')
     def test_special_and_truncated_glyph(self):
-        c=self.codec();self.assertEqual(c.decode_run(b'\x27\x80\x01',0)[0],'��������2780��')
+        c=self.codec();self.assertEqual(c.decode_run(b'\x27\x80\x01',0)[0],'〈特殊码2780〉')
         self.assertEqual(c.decode_run(b'\x29',0)[1],0)
-        self.assertEqual(c.encode_original('��������2780��'),b'\x27\x80')
+        self.assertEqual(c.encode_original('〈特殊码2780〉'),b'\x27\x80')
     def test_duplicate_map_rejected(self):
-        p=self.dir/'bad.csv';p.write_text('glyph_index,character\n0,��\n0,��\n',encoding='utf-8')
+        p=self.dir/'bad.csv';p.write_text('glyph_index,character\n0,甲\n0,乙\n',encoding='utf-8')
         with self.assertRaises(ValueError):Codec(p)
     def test_pointer_table_bounds(self):
         good=struct.pack('<3I',2,12,13)+b'\x01\x01'

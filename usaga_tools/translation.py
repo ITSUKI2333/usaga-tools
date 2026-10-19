@@ -5,13 +5,13 @@ This module never writes game files and does not build an ISO.
 import csv,collections,re
 from pathlib import Path
 
-TOKEN=re.compile(r'��������[0-9A-Fa-f]{4}��')
+TOKEN=re.compile(r'〈特殊码[0-9A-Fa-f]{4}〉')
 def load_inputs(folder):
  direct=collections.defaultdict(list);byraw=collections.defaultdict(list);tables=[];skips=[]
  for p in sorted(Path(folder).glob('*.csv')):
   with p.open(encoding='utf-8-sig',newline='') as f:rows=list(csv.DictReader(f))
   if not rows:continue
-  field=next((k for k in ('translation_zh','���ķ���') if k in rows[0]),None)
+  field=next((k for k in ('translation_zh','中文翻译') if k in rows[0]),None)
   if not field or not {'iso_offset','raw_hex','byte_length','text'}<=set(rows[0]):continue
   tables.append(dict(file=p.name,rows=len(rows),field=field))
   for n,row in enumerate(rows,2):

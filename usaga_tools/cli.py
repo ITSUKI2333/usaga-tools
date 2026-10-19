@@ -6,8 +6,8 @@ from .elf import parse_elf
 from .codec import Codec
 from . import scripts,images
 
-TABLES=[('��������',0x6260,256),('��ͼ����',0x7820,256),('�������',0x8660,184),('�ز�����',0x9fe0,64),('��������',0xa230,48),('������װ�����',0xa370,256),('��Ҫ��������',0xaecc,33),('��������',0xb040,868),('���ܼ���������',0xc8d0,256),('ս������������',0xd12c,701),('��������',0xee40,256),('������������',0xfa00,256)]
-HELP_TABLES=[('���ܼ�����˵��','TONO5',0x1a560,645,0x1af80,0x1bc00),('���ܼ�����˵��','17',0x10,645,0xa30,0x1aa8),('װ������˵��','17',0x5b40,256,0x5f50,0x6780),('��Ч��˵��','17',0x6780,256,0x6b80,0x7310),('��Ŀ�꼰����Ч��','17',0x7310,256,0x7710,0x7930),('��Ҫ����˵��','TONO5',0x1e6a0,32,0x1e720,0x1e980),('����˵��','TONO5',0x1e980,24,0x1e9e0,0x1ed80)]
+TABLES=[('人物名称',0x6260,256),('地图名称',0x7820,256),('任务标题',0x8660,184),('素材名称',0x9fe0,64),('道具种类',0xa230,48),('动作及装备类别',0xa370,256),('重要道具名称',0xaecc,33),('道具名称',0xb040,868),('技能及能力名称',0xc8d0,256),('战斗技及术名称',0xd12c,701),('怪物名称',0xee40,256),('怪物种族名称',0xfa00,256)]
+HELP_TABLES=[('技能及能力说明','TONO5',0x1a560,645,0x1af80,0x1bc00),('技能及能力说明','17',0x10,645,0xa30,0x1aa8),('装备能力说明','17',0x5b40,256,0x5f50,0x6780),('术效果说明','17',0x6780,256,0x6b80,0x7310),('术目标及附加效果','17',0x7310,256,0x7710,0x7930),('重要道具说明','TONO5',0x1e6a0,32,0x1e720,0x1e980),('术具说明','TONO5',0x1e980,24,0x1e9e0,0x1ed80)]
 
 def text_export(s,args):
     g=Game(s);iso=g.iso(s);codec=Codec(s.input('glyph_map'));out=s.output(args.out)
@@ -65,7 +65,7 @@ def text_export(s,args):
                 r=dict(id='',bank='ELF_hdd_mess',iso_offset=off,iso_offset_hex=hex(off),byte_length=end-p,glyph_count=len(ids),text=text,raw_hex=data[p:end].hex(' '),terminator_hex='00',evidence='bounded ELF hdd_mess object VA 0x82CEE0 size 2320',unknown_glyphs=';'.join(map(str,unknown)))
                 found[off]=r;hdd.append(r)
             p=end+1
-        s.csv(out/'HDD��װϵͳ��ʾ.csv',hdd)
+        s.csv(out/'HDD安装系统提示.csv',hdd)
     candidates=list({r['iso_offset']:r for r in candidates if r['iso_offset'] not in found}.values())
     rows=[dict(r,id=f'T{i:07}') for i,r in enumerate(sorted(found.values(),key=lambda r:r['iso_offset']),1)]
     s.csv(out/'all_text_occurrences.csv',rows);s.csv(out/'description_references.csv',refs)
@@ -74,7 +74,7 @@ def text_export(s,args):
         rr=[r for r in names if r['category']==cat]
         if rr:s.csv(out/(cat+'.csv'),rr)
     for cat in sorted({r['category'] for r in refs}):
-        rr={r['iso_offset']:dict(r,���ķ���='') for r in refs if r['category']==cat}
+        rr={r['iso_offset']:dict(r,中文翻译='') for r in refs if r['category']==cat}
         s.csv(out/(cat+'.csv'),rr.values())
     with iso.open('rb') as f:
         for r in rows:
@@ -143,7 +143,7 @@ def coverage(s,args):
     for r in missing:grouped[r['raw_hex']].append(r)
     clean=[]
     for key,rs in grouped.items():
-        q=dict(rs[0],���ķ���='',occurrences=len(rs),all_iso_offsets=';'.join(r['iso_offset_hex'] for r in rs));clean.append(q)
+        q=dict(rs[0],中文翻译='',occurrences=len(rs),all_iso_offsets=';'.join(r['iso_offset_hex'] for r in rs));clean.append(q)
     s.csv(out/'missing_translations.csv',clean);s.json(out/'summary.json',dict(known_occurrences=len(raw),untranslated_nonblank_occurrences=len(missing),unique_missing=len(clean),conflicts=catalog['conflicts'],ambiguous=catalog['ambiguous'],translation_inputs=catalog['tables'],complete_game_text_verified=False))
     print('Missing unique translations:',len(clean))
 
@@ -167,7 +167,7 @@ def text_plan(s,args):
         for cat,table,n in TABLES:
             for i,p in enumerate(struct.unpack_from('<'+'I'*n,tono,table)):known[0x4ad19000+p]=(cat,i)
         for line,r in enumerate(rows,2):
-            field=next((k for k in ('���ķ���','translation_zh') if k in r),None)
+            field=next((k for k in ('中文翻译','translation_zh') if k in r),None)
             if not field:raise ValueError('CSV lacks translation column')
             text=r[field]
             if not text.strip():continue
@@ -182,7 +182,7 @@ def text_plan(s,args):
             if a not in known or actual[-1:]!=b'\x01':reason='requires_proven_script_or_relocation'
             try:
                 if reason is None:
-                    if re.findall(r'��������[0-9A-Fa-f]{4}��',text)!=re.findall(r'��������[0-9A-Fa-f]{4}��',r['text']):raise ValueError('Special-code order changed')
+                    if re.findall(r'〈特殊码[0-9A-Fa-f]{4}〉',text)!=re.findall(r'〈特殊码[0-9A-Fa-f]{4}〉',r['text']):raise ValueError('Special-code order changed')
                     encoded=codec.encode_original(text)
                     if len(encoded)>n:reason='too_long_needs_relocation'
             except ValueError as exc:reason=str(exc)

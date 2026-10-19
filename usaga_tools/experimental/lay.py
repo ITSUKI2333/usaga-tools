@@ -182,21 +182,21 @@ def compose(atlas, frame, canvas_size=360, flip_mode=0):
 
 def write_viewer(out, manifest):
     html = r'''<!doctype html><html lang="zh-CN"><meta charset="utf-8">
-<title>USAGA LAY ԭ��֡Ԥ����</title><style>
+<title>USAGA LAY 原生帧预览器</title><style>
 body{font:16px system-ui;background:#202229;color:#eee;margin:24px}a{color:#a9d4ff}
 button,input,select{font:inherit}button{margin:3px}.row{display:flex;gap:24px;flex-wrap:wrap}
 .view{width:360px;height:360px;background:repeating-conic-gradient(#555 0 25%,#444 0 50%) 0/24px 24px;image-rendering:pixelated}
 .atlas{max-width:512px;max-height:600px;object-fit:contain;background:#555}.info{white-space:pre-wrap;font:13px monospace}
-</style><h1>USAGA LAY ԭ��֡Ԥ����</h1>
-<p>��ԭ�� ISO �� .lay ��ȡ������ͼҳ��ԭ����������Ͷ������б��������ж�ȡ��ͼҳ��֡����ԭʼ�ȴ�ֵ�������ٶ�ΪԤ������������λ�á����š���ת������ʱ������δ�������֡�δ�����������õ�ԭʼ֡���Ʋ���ͼҳ��</p>
-<label>��ɫ <select id="character"></select></label>
-<label>֡ <input id="frame" type="range" min="0" max="0" value="0"><span id="number">0</span></label>
-<button id="prev">��һ֡</button><button id="next">��һ֡</button><br>
-<label>ԭ���������� <select id="sequence"></select></label>
-<label>Ԥ���ٶȣ��ȴ���λ/�룩<input id="rate" type="number" min="1" max="600" value="60"></label><button id="play">����/��ͣ</button><span id="status"></span><div class="row"><section><h2>�ϳɻ���</h2><img id="pose" class="view"></section>
-<section><h2>��ǰԭʼ��ͼҳ</h2><img id="atlas" class="atlas"></section></div>
-<h2>֡��¼</h2><div id="info" class="info"></div>
-<p>����������������л�֡��������Դֻ�ڱ��ض�ȡ��Ԥ��������������</p>
+</style><h1>USAGA LAY 原生帧预览器</h1>
+<p>从原版 ISO 的 .lay 读取四张贴图页、原生部件坐标和动作序列表。按序列读取贴图页、帧号与原始等待值。播放速度为预览参数；场景位置、缩放、旋转与运行时倍率尚未完整复现。未被动作表引用的原始帧不推测贴图页。</p>
+<label>角色 <select id="character"></select></label>
+<label>帧 <input id="frame" type="range" min="0" max="0" value="0"><span id="number">0</span></label>
+<button id="prev">上一帧</button><button id="next">下一帧</button><br>
+<label>原生动作序列 <select id="sequence"></select></label>
+<label>预览速度（等待单位/秒）<input id="rate" type="number" min="1" max="600" value="60"></label><button id="play">播放/暂停</button><span id="status"></span><div class="row"><section><h2>合成画面</h2><img id="pose" class="view"></section>
+<section><h2>当前原始贴图页</h2><img id="atlas" class="atlas"></section></div>
+<h2>帧记录</h2><div id="info" class="info"></div>
+<p>操作：方向键左右切换帧。所有资源只在本地读取，预览器无需联网。</p>
 <script>
 let manifest=__MANIFEST__, selected, timer=null, cursor=0;
 const el=id=>document.getElementById(id);
@@ -204,23 +204,23 @@ function clamp(v,min,max){return Math.max(min,Math.min(max,v));}
 function stop(){if(timer){clearTimeout(timer);timer=null}el('status').textContent='';}
 function display(variant=0){let n=+el('frame').value;el('number').textContent=n;
  let f=selected.frames[n];
- if(f.page===null){el('pose').removeAttribute('src');el('atlas').removeAttribute('src');el('status').textContent='��ԭʼ֡δ�ڶ����������ã���ͼҳ��δȷ��';}
+ if(f.page===null){el('pose').removeAttribute('src');el('atlas').removeAttribute('src');el('status').textContent='此原始帧未在动作表中引用，贴图页尚未确定';}
  else {el('pose').src=selected.folder+'/frames/'+String(n).padStart(3,'0')+(variant?'_flip'+variant:'')+'.png';
        el('atlas').src=selected.folder+'/page_'+f.page+'.png';}
- el('info').textContent='GRA '+selected.index+' / ֡ '+n+' / ��ͼҳ '+f.page+
-  ' / ISOƫ�� 0x'+selected.iso_offset.toString(16)+' / ֡���� '+f.parts.length+'\n'+
+ el('info').textContent='GRA '+selected.index+' / 帧 '+n+' / 贴图页 '+f.page+
+  ' / ISO偏移 0x'+selected.iso_offset.toString(16)+' / 帧部件 '+f.parts.length+'\n'+
   f.parts.map((p,i)=>i+': XY='+p.xy+' UV='+p.uv+' flag=0x'+p.flags.toString(16)).join('\n');}
 function choose(){stop();selected=manifest.characters[el('character').value];el('frame').max=selected.frames.length-1;
  el('frame').value=selected.frames.find(f=>f.page!==null).index;
  el('sequence').replaceChildren();for(let s of selected.sequences){let op=document.createElement('option');op.value=s.index;
- op.textContent='���� '+s.index+'��'+s.entries.length+' ��ָ�';el('sequence').append(op)}display();}
+ op.textContent='序列 '+s.index+'（'+s.entries.length+' 个指令）';el('sequence').append(op)}display();}
 for(let c of manifest.characters){let op=document.createElement('option');op.value=manifest.characters.indexOf(c);op.textContent=c.name+' (GRA '+c.index+')';el('character').append(op)}choose();
 el('character').onchange=choose;el('frame').oninput=()=>{stop();display()};
 el('prev').onclick=()=>{stop();el('frame').value=clamp(+el('frame').value-1,0,+el('frame').max);display()};
 el('next').onclick=()=>{stop();el('frame').value=clamp(+el('frame').value+1,0,+el('frame').max);display()};
 function step(){let seq=selected.sequences[+el('sequence').value];if(!seq.entries.length){stop();return}
  let entry=seq.entries[cursor++%seq.entries.length];el('frame').value=entry.frame;display(entry.flip);
- el('status').textContent='���� '+seq.index+' / ָ�� '+((cursor-1)%seq.entries.length)+' / ԭʼ�ȴ�ֵ '+entry.duration_units;
+ el('status').textContent='序列 '+seq.index+' / 指令 '+((cursor-1)%seq.entries.length)+' / 原始等待值 '+entry.duration_units;
  timer=setTimeout(step,Math.max(16,entry.duration_units*1000/clamp(+el('rate').value||60,1,600)));}
 el('sequence').onchange=()=>{stop();cursor=0;let s=selected.sequences[+el('sequence').value];if(s.entries.length){el('frame').value=s.entries[0].frame;display(s.entries[0].flip)}};
 el('play').onclick=()=>{if(timer){stop();return}cursor=0;step()};
