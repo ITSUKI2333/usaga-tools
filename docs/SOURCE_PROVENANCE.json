@@ -1,0 +1,158 @@
+[
+  {
+    "source": "analyze_usaga.py",
+    "symbol": "parse_elf",
+    "lines": [
+      79,
+      119
+    ],
+    "source_sha256": "bb5e3d92fdf74a9899292b2252a4c4226dd900d2bbc2f44a9f6474f825e065b4"
+  },
+  {
+    "source": "analyze_usaga.py",
+    "symbol": "inspect_tm2",
+    "lines": [
+      121,
+      148
+    ],
+    "source_sha256": "bb5e3d92fdf74a9899292b2252a4c4226dd900d2bbc2f44a9f6474f825e065b4"
+  },
+  {
+    "source": "export_usaga_images.py",
+    "symbol": "png",
+    "lines": [
+      14,
+      27
+    ],
+    "source_sha256": "e33c74b1af3af02c319f04f5f952d504b924e33ef06c7664e8f3c34da980ca43"
+  },
+  {
+    "source": "export_usaga_images.py",
+    "symbol": "color",
+    "lines": [
+      56,
+      61
+    ],
+    "source_sha256": "e33c74b1af3af02c319f04f5f952d504b924e33ef06c7664e8f3c34da980ca43"
+  },
+  {
+    "source": "export_usaga_images.py",
+    "symbol": "decode_picture",
+    "lines": [
+      63,
+      81
+    ],
+    "source_sha256": "e33c74b1af3af02c319f04f5f952d504b924e33ef06c7664e8f3c34da980ca43"
+  },
+  {
+    "source": "usaga_native_images.py",
+    "symbol": "native_pairs",
+    "lines": [
+      4,
+      20
+    ],
+    "source_sha256": "8a1867ee2a54ccdd3e1cb2cb90599b0d11538120303b2937ad62745fafb55466"
+  },
+  {
+    "source": "export_usaga_text.py",
+    "symbol": "infer_lengths",
+    "lines": [
+      46,
+      84
+    ],
+    "source_sha256": "dbcf4e16120f183cd42d94351fb64f4fa6ded462322e827df67399e5f264070e"
+  },
+  {
+    "source": "export_usaga_text.py",
+    "symbol": "valid_bank",
+    "lines": [
+      86,
+      92
+    ],
+    "source_sha256": "dbcf4e16120f183cd42d94351fb64f4fa6ded462322e827df67399e5f264070e"
+  },
+  {
+    "source": "export_usaga_text.py",
+    "symbol": "pointer_pool",
+    "lines": [
+      94,
+      106
+    ],
+    "source_sha256": "dbcf4e16120f183cd42d94351fb64f4fa6ded462322e827df67399e5f264070e"
+  },
+  {
+    "source": "export_usaga_text.py",
+    "symbol": "make_record",
+    "lines": [
+      108,
+      111
+    ],
+    "source_sha256": "dbcf4e16120f183cd42d94351fb64f4fa6ded462322e827df67399e5f264070e"
+  },
+  {
+    "source": "export_usaga_text.py",
+    "symbol": "language_candidate",
+    "lines": [
+      113,
+      116
+    ],
+    "source_sha256": "dbcf4e16120f183cd42d94351fb64f4fa6ded462322e827df67399e5f264070e"
+  },
+  {
+    "source": "export_usaga_text.py",
+    "symbol": "graph_bank",
+    "lines": [
+      118,
+      169
+    ],
+    "source_sha256": "dbcf4e16120f183cd42d94351fb64f4fa6ded462322e827df67399e5f264070e"
+  },
+  {
+    "source": "usaga_cn_extended_codec.py",
+    "source_sha256": "fa24fe09bfc08b439f82a914f2f97790732f25f177919aafd1e40a1673e4ec41",
+    "adaptation": "relative intra-package imports only",
+    "status": "experimental; full-game regression not claimed"
+  },
+  {
+    "source": "usaga_two_page_font.py",
+    "source_sha256": "bb105538292552c2330e05c1eb1e08870d582acdc3c87f37781ab033c5ec8870",
+    "adaptation": "relative intra-package imports only",
+    "status": "experimental; full-game regression not claimed"
+  },
+  {
+    "source": "usaga_ui_spacing_runtime.py",
+    "source_sha256": "88abaac0abffd7d89f33486b4dbe7a740980830d195dc4f476658c055df9efb4",
+    "adaptation": "relative intra-package imports only",
+    "status": "experimental; full-game regression not claimed"
+  },
+  {
+    "source": "usaga_ui_physical_wrap.py",
+    "source_sha256": "8ff84be16cea630843a6a354506205614568aa80bba00a9dc1d2aac765edb73e",
+    "adaptation": "relative intra-package imports only",
+    "status": "experimental; full-game regression not claimed"
+  },
+  {
+    "source": "usaga_window_isolation.py",
+    "source_sha256": "9881e7a7f2885d2dd9a235da7e041305361d12178d669deb8be24e5d20cd4257",
+    "adaptation": "relative intra-package imports only",
+    "status": "experimental; full-game regression not claimed"
+  },
+  {
+    "source": "usaga_ui_layout.py",
+    "source_sha256": "b3d09f5d8f47cbdad2505ab07f2f26ae78a9c51ced2b40dee1299a43a4eddd51",
+    "adaptation": "relative intra-package imports only",
+    "status": "experimental; full-game regression not claimed"
+  },
+  {
+    "source": "usaga_text_address_aliases.py",
+    "source_sha256": "3ffd70c035d6f176f0b839455c3063b02518312f65a32ce7af04dd7572da6913",
+    "adaptation": "relative intra-package imports only",
+    "status": "experimental; full-game regression not claimed"
+  },
+  {
+    "source": "usaga_text_overflow_recovery.py",
+    "source_sha256": "ebaae357a7587a2d9a126a3eca9a8aea2453a4f0a698ff8aba9028ab1840067e",
+    "adaptation": "relative intra-package imports only",
+    "status": "experimental; full-game regression not claimed"
+  }
+]

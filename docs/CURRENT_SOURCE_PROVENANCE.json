@@ -1,0 +1,56 @@
+[
+  {
+    "source": "usaga_cn_extended_codec.py",
+    "source_sha256": "fa24fe09bfc08b439f82a914f2f97790732f25f177919aafd1e40a1673e4ec41",
+    "destination": "usaga_tools/experimental/usaga_cn_extended_codec.py",
+    "adaptation": "only package-relative imports; no game data or pipeline artifacts"
+  },
+  {
+    "source": "usaga_text_address_aliases.py",
+    "source_sha256": "3ffd70c035d6f176f0b839455c3063b02518312f65a32ce7af04dd7572da6913",
+    "destination": "usaga_tools/experimental/usaga_text_address_aliases.py",
+    "adaptation": "only package-relative imports; no game data or pipeline artifacts"
+  },
+  {
+    "source": "usaga_text_overflow_recovery.py",
+    "source_sha256": "1884cc31495ce3985e54ae5007af2d5ddf22fad936b1e16bae58155b5bcd04ab",
+    "destination": "usaga_tools/experimental/usaga_text_overflow_recovery.py",
+    "adaptation": "only package-relative imports; no game data or pipeline artifacts"
+  },
+  {
+    "source": "usaga_two_page_font.py",
+    "source_sha256": "bb105538292552c2330e05c1eb1e08870d582acdc3c87f37781ab033c5ec8870",
+    "destination": "usaga_tools/experimental/usaga_two_page_font.py",
+    "adaptation": "only package-relative imports; no game data or pipeline artifacts"
+  },
+  {
+    "source": "usaga_ui_layout.py",
+    "source_sha256": "4f923985244cd5d75dea2fd31e818d62d9bd21f0389a51e4641acb01c4736d0d",
+    "destination": "usaga_tools/experimental/usaga_ui_layout.py",
+    "adaptation": "only package-relative imports; no game data or pipeline artifacts"
+  },
+  {
+    "source": "usaga_ui_physical_wrap.py",
+    "source_sha256": "8ff84be16cea630843a6a354506205614568aa80bba00a9dc1d2aac765edb73e",
+    "destination": "usaga_tools/experimental/usaga_ui_physical_wrap.py",
+    "adaptation": "only package-relative imports; no game data or pipeline artifacts"
+  },
+  {
+    "source": "usaga_ui_spacing_runtime.py",
+    "source_sha256": "88abaac0abffd7d89f33486b4dbe7a740980830d195dc4f476658c055df9efb4",
+    "destination": "usaga_tools/experimental/usaga_ui_spacing_runtime.py",
+    "adaptation": "only package-relative imports; no game data or pipeline artifacts"
+  },
+  {
+    "source": "usaga_window_isolation.py",
+    "source_sha256": "9881e7a7f2885d2dd9a235da7e041305361d12178d669deb8be24e5d20cd4257",
+    "destination": "usaga_tools/experimental/usaga_window_isolation.py",
+    "adaptation": "only package-relative imports; no game data or pipeline artifacts"
+  },
+  {
+    "source": "Tools/LayViewer/lay_viewer.py",
+    "source_sha256": "f2519ac9e4cb95ebe256649f2f775e0c6e7b2e6a01dc827a488699940ce2c6f0",
+    "destination": "usaga_tools/experimental/lay.py",
+    "adaptation": "extract pure parsers/compositor/viewer; remove private paths and defaults; lazy Pillow; explicit timing limits; shared-edge alpha correction; integrate guarded CLI"
+  }
+]

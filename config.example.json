@@ -1,0 +1,9 @@
+{
+  "profile": "SLPS-25199",
+  "work_dir": "../USAGA_Work",
+  "iso": "input/game.iso",
+  "elf": "input/SLPS_251.99",
+  "glyph_map": "input/glyph_map.csv",
+  "font": "input/localization_font.ttf",
+  "pillow_dir": "vendor"
+}
